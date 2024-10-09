@@ -34,7 +34,7 @@ export default function Home() {
       } else {
         setError(data.message || 'Failed to generate image.');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred while generating the image.');
     } finally {
       setLoading(false); // Stop loading once the request is complete

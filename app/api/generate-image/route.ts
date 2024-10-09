@@ -44,9 +44,11 @@ export async function POST(req: NextRequest) {
     const imageUrl = response.data.data[0].url;
     return NextResponse.json({ imageUrl }, { status: 200 });
 
-  } catch (error: any) {
-    // Log error response from OpenAI or axios
-    console.error('Error generating image:', error.response?.data || error.message);
-    return NextResponse.json({ message: 'Failed to generate image', error: error.message }, { status: 500 });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      console.error('Error generating image:', error.message);
+      return NextResponse.json({ message: 'Failed to generate image' }, { status: 500 });
+    }
+    return NextResponse.json({ message: 'Unknown error occurred' }, { status: 500 });
   }
 }
